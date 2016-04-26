@@ -33,7 +33,7 @@ public class TestHighScore1 {
             int rndValue = rnd.nextInt(scores.size());
             
             Integer score = scores.get(rndValue);
-            System.out.println( namePlayer + " a fait un score de "+ score);
+            System.out.println( namePlayer + " just scored "+ score);
         }
         catch(IOException ex){
             ex.printStackTrace();
