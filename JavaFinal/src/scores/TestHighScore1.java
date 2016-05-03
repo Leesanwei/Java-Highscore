@@ -1,3 +1,9 @@
+/**
+ * Package with classes for sending and receiving high scores
+ * @author San Wei Lee, Godefroi Roussel
+ *  
+ */
+
 package scores;
  
 import java.util.*;
@@ -9,7 +15,7 @@ public class TestHighScore1 {
     public static void main(String[] args) {
     	
     	
-    	HighScore HS = new HighScore();
+    	HighScore1 HS = new HighScore1();
     	try {
     		for(int i=0; i<HS.getScores().length;i++){
     			System.out.println(HS.getScores()[i]);

@@ -1,3 +1,14 @@
+/**
+ * Packa
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
+
 package scores;
 
 import java.net.MalformedURLException;
@@ -18,10 +29,10 @@ public class HighScore1 {
 		int nbLine=0;
 		
 		try {
-			// Mise en place de l'url pour récupérer le fichier et ouverture d'un flux entrant
+			// Mise en place de l'url pour ré–upé–er le fichier et ouverture d'un flux entrant
 			url = new URL("https://api.thingspeak.com/channels/110013/feeds.csv");
 			is = url.openStream();
-			//Lecture du fichier qui va être stocké dans une liste dynamique en attendant d'être déplacé vers un tableau de String
+			//Lecture du fichier qui va é˜¾re stockï¿½ dans une liste dynamique en attendant d'é˜¾re dé–œlacï¿½ vers un tableau de String
 			Scanner scanner = new Scanner(is);
 			while (scanner.hasNextLine()){
 				line = scanner.nextLine();
