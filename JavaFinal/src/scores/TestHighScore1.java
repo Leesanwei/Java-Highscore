@@ -2,18 +2,27 @@ package scores;
  
 import java.util.*;
 import java.io.*;
+import java.net.MalformedURLException;
  
 public class TestHighScore1 {
  
     public static void main(String[] args) {
     	
     	
+    	HighScore HS = new HighScore();
+    	try {
+    		for(int i=0; i<HS.getScores().length;i++){
+    			System.out.println(HS.getScores()[i]);
+    		}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+    	
     	List<Integer> scores = new ArrayList<Integer>(); 
     	Random rnd = new Random();
     	Scanner sc = new Scanner(System.in);
         // TODO Auto-generated method stub
         System.out.println("Please write your player name below : ");
-        
         String namePlayer = sc.nextLine();
         sc.close();
         //System.out.println(namePlayer);
@@ -38,7 +47,7 @@ public class TestHighScore1 {
         catch(IOException ex){
             ex.printStackTrace();
         }
- 
+ 			
     }
      
 }
