@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 /**
- * Same functions as HighScore2 but added sendScore() to update ThingSpeak if player's score is in the top 10.
+ * The class HighScore3 is used to retrieve scores on ThingSpeak server and calls BestPlayer2 to have top 10 players with the highest scores. Also added sendScore() to update ThingSpeak if player's score is in the top 10.
  * @author Godefroi Roussel et San Wei Lee.
- * @version 1.1
+ * @version 3.1
  *
  */
 public class HighScore3 {

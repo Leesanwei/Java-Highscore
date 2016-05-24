@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * The class HighScore2 is used to retrieve scores on ThingSpeak server and calls BestPlayer2 to have top 10 players with the highest scores.
  * @author Godefroi Roussel et San Wei Lee.
- * @version 1.1
+ * @version 2.1
  *
  */
 public class HighScore2 {

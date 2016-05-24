@@ -17,7 +17,7 @@ import java.util.Scanner;
 									2. compares it to the top 10 highscores
 									3. Send the player��s score and name online if its score is among the top 10
  * @author Godefroi Roussel et San Wei Lee.
- * @version 1.1
+ * @version 4.1
  *
  */
 public class TestHighScore4 {
@@ -46,8 +46,8 @@ public class TestHighScore4 {
         	
         	for(int i=0; i<taille;i++){
         		 z=i+1;
-    			System.out.println("["+z +"] " + tabScore[i].player + ":" + tabScore[i].score);
-    		}
+    			System.out.println("["+z +"] " + tabScore[i].getPlayer() + ":" + tabScore[i].getScore());
+    		}//for
     		
         	//2) ask the player if he wants to start a new game
         	 do{
@@ -82,7 +82,7 @@ public class TestHighScore4 {
                 	while (scan.hasNextInt()) {
                         int i = scan.nextInt();
                         scores.add(i);
-                    }
+                    }//while
                     scan.close();
                     
                     //Selection of a random score and display of the name and the score coming from this player.
@@ -97,17 +97,20 @@ public class TestHighScore4 {
         			int i=0;
         			// If our score is greater or equal than one of the top 10 then we add it to the file (if there is 2 scores equals the oldest is kept as first in the high score)
         			while (i<tailleTab && !returnState){
-        				if (score>= tabScore[i].score){
+        				if (score>= tabScore[i].getScore()){
                     		BestPlayer4 p1 = new BestPlayer4(namePlayer,score);
-                			HS.sendScore(p1);
-                			returnState=true;
+                			//While the score isn't send and receive by ThingSpeak, we send again the player to enter in the top 10
+                    		while (!returnState){
+                				HS.sendScore(p1);
+                				returnState=verificationScoreSend(p1, HS);
+                			}//while
                 			System.out.println("Your score is in the top 10. Congratulations !");
                     	}//if
         				i++;
         			}//while
         			if (!returnState){
         				System.out.println("Your score is not in the top 10, try again");
-        			}
+        			}//if
                 }//try
                 catch(IOException ex){
                 	System.out.println("Impossible to read the file");
@@ -122,10 +125,26 @@ public class TestHighScore4 {
         	}
         	
     	}//while
-    	
-    	
-        
- 			
+    }
+    
+    /**
+     * 
+     * @param p The player send online
+     * @return true if the player is in the top ten, else false
+     * @throws MalformedURLException 
+     */
+    private static boolean verificationScoreSend(BestPlayer4 p, HighScore4 HS) throws MalformedURLException{
+    	String[] allScore = HS.getScores();
+    	BestPlayer4[] tabScore = HS.tenBestScores(allScore);
+    	boolean result = false;
+    	int i=0, taille=tabScore.length;
+    	while (!result && i<taille ){
+    		if (tabScore[i].equal(p)){
+    			result=true;
+    		}//if
+    		i++;
+    	}
+    	return result;
     }
 
 }

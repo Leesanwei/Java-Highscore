@@ -7,10 +7,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 /**
- * Same functions as HighScore3 but uses the class BestPlayer4
+ * The class HighScore4 is used to retrieve scores on ThingSpeak server and calls BestPlayer2 to have top 10 players with the highest scores. Also added sendScore() to update ThingSpeak if player's score is in the top 10.
  * @author Godefroi Roussel et San Wei Lee.
- * @version 1.1
+ * @version 4.1
  *
  */
 public class HighScore4 {
@@ -44,8 +45,8 @@ public class HighScore4 {
 				if (line.length()>0){
 				resultat.add(line);
 				nbLine++;
-				}
-			}
+				}//if
+			}//while
 			
 			scanner.close();
 		} catch (IOException e) {
@@ -57,11 +58,16 @@ public class HighScore4 {
 		int taille = resultat.size();
 		for(int i=0; i<taille;i++){
 			result[i] = resultat.get(i);
-		}
+		}//for
 		resultat.clear(); //We clear the arraylist because we don't need to have it in the memory.
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param readScores 
+	 * @return An array of the 10 best players
+	 */
 	public BestPlayer4[] tenBestScores(String[] readScores){
 		int taille = readScores.length;
 		BestPlayer4 p;
@@ -81,12 +87,12 @@ public class HighScore4 {
 				p=new BestPlayer4(tokens[3],Integer.parseInt(tokens[2]));
 				allBest[x]=p;
 				x++;
-			}
+			}//if
 
-		}
+		}//for
 		BestPlayer4 tampon;
 		
-		//As the sort hasn't to be sophisticated we won't use a quicksort or a dichotomic algorithm
+		
 		BestPlayer4[] top10;
 		int i=0;
 		
@@ -98,25 +104,31 @@ public class HighScore4 {
 			top10 = new BestPlayer4[x];
 		}
 		
-		
+		//As the sort hasn't to be sophisticated we won't use a quicksort or a dichotomic algorithm
 		while(i<10 && i<x ){
 			for (int k=i; k<x;k++){
 				if (allBest[i].compareTo(allBest[k])==-1){
 						tampon = allBest[k];
 						allBest[k]=allBest[i];
 						allBest[i]=tampon;
-					}
-				}
+					}//if
+				}//for
 			top10[i]=allBest[i];
 			i++;
-		}
+		}//while
 		
 		return top10;
 	}
 	
+	/**
+	 * 
+	 * @param p The player we want to send
+	 * @throws IOException
+	 * This method will send a player on ThingSpeak
+	 */
 	public void sendScore(BestPlayer4 p) throws IOException{
 		
-		URL url = new URL("https://api.thingspeak.com/update?api_key=93XKAAAIR3OFXA5D&field1=" + p.score + "&field2=" + p.player);
+		URL url = new URL("https://api.thingspeak.com/update?api_key=93XKAAAIR3OFXA5D&field1=" + p.getScore() + "&field2=" + p.getPlayer());
 		url.openStream();
 	}
 
