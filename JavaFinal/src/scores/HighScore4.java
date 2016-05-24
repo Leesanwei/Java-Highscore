@@ -87,15 +87,6 @@ public class HighScore4 {
 		BestPlayer4 tampon;
 		
 		//As the sort hasn't to be sophisticated we won't use a quicksort or a dichotomic algorithm
-		for (int j=0; j<x; j++){
-			for (int k=0; k<x;k++){
-				if (allBest[j].compareTo(allBest[k])==1){
-					tampon = allBest[k];
-					allBest[k]=allBest[j];
-					allBest[j]=tampon;
-				}
-			}
-		}
 		BestPlayer4[] top10;
 		int i=0;
 		
@@ -109,6 +100,13 @@ public class HighScore4 {
 		
 		
 		while(i<10 && i<x ){
+			for (int k=i; k<x;k++){
+				if (allBest[i].compareTo(allBest[k])==-1){
+						tampon = allBest[k];
+						allBest[k]=allBest[i];
+						allBest[i]=tampon;
+					}
+				}
 			top10[i]=allBest[i];
 			i++;
 		}
