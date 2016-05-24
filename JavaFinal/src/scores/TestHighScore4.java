@@ -15,7 +15,7 @@ import java.util.Scanner;
 							  3. if yes:
 									1. draw a score at random from those read in the file
 									2. compares it to the top 10 highscores
-									3. Send the player¡¯s score and name online if its score is among the top 10
+									3. Send the playerï¿½ï¿½s score and name online if its score is among the top 10
  * @author Godefroi Roussel et San Wei Lee.
  * @version 1.1
  *
@@ -97,20 +97,9 @@ public class TestHighScore4 {
                     for (BestPlayer4 p : tabScore){
                     	if (p!=null && score>= p.score){
                     		BestPlayer4 p1 = new BestPlayer4(namePlayer,score);
-                    		while (returnState!=true){
-                    			HS.sendScore(p1);
-                    			allScore = HS.getScores();
-                    			tabScore = HS.tenBestScores(allScore);
-                    			tailleTab = tabScore.length;
-                    			int i=0;
-                    			while (i<tailleTab && !returnState){
-                    				BestPlayer4 p2 = tabScore[i];
-                    				if (p2.equal(p1)){
-                    					returnState=true;
-                    				}//if
-                    				i++;
-                    			}//while
-                    		}//while
+                    		allScore = HS.getScores();
+                			tabScore = HS.tenBestScores(allScore);
+                			HS.sendScore(p1);
                     	}//if
                     }//for
                 }//try
