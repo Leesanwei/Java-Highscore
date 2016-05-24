@@ -31,9 +31,10 @@ public class TestHighScore4 {
     	int answer=0;
     	boolean play = true;
     	Scanner beginning = new Scanner(System.in);
-    	Scanner sc = new Scanner(System.in);
-    	boolean returnState;
+    	Scanner sc = new Scanner(System.in);    	
     	int tailleTab;
+    	boolean returnState = false;
+    	int z;
     	while (play){
     		//1) Reads online highscores then print the top 10 highscores
     		// Creation of a HighScore object and initialization. (It handles the error if the connection to the website is impossible)
@@ -42,7 +43,7 @@ public class TestHighScore4 {
         	
         	BestPlayer4[] tabScore = HS.tenBestScores(allScore);
         	int taille = tabScore.length;
-        	int z;
+        	
         	for(int i=0; i<taille;i++){
         		 z=i+1;
     			System.out.println("["+z +"] " + tabScore[i].player + ":" + tabScore[i].score);
@@ -60,11 +61,8 @@ public class TestHighScore4 {
     			  System.out.println(beginning.next() + " was not valid input.");
     			}
         	}while(answer!=1 && answer != 2);
-        	
-       
-        	 
 
-        	//3) If yes he plays the game
+        	//3) If 1 he plays the game
         	if (answer==1){
 
             	// Creation of a scores List and recuperation of the player's name.
@@ -93,15 +91,23 @@ public class TestHighScore4 {
                     Integer score = scores.get(rndValue);
                     System.out.println( namePlayer + " just scored "+ score);
                     returnState=false;
-                    // If our score is greater or equal than one of the top 10 then we add it to the file (if there is 2 scores equals the oldest is kept as first in the high score)
-                    for (BestPlayer4 p : tabScore){
-                    	if (p!=null && score>= p.score){
+                    tailleTab = tabScore.length;
+                    allScore = HS.getScores();
+        			tabScore = HS.tenBestScores(allScore);
+        			int i=0;
+        			// If our score is greater or equal than one of the top 10 then we add it to the file (if there is 2 scores equals the oldest is kept as first in the high score)
+        			while (i<tailleTab && !returnState){
+        				if (score>= tabScore[i].score){
                     		BestPlayer4 p1 = new BestPlayer4(namePlayer,score);
-                    		allScore = HS.getScores();
-                			tabScore = HS.tenBestScores(allScore);
                 			HS.sendScore(p1);
+                			returnState=true;
+                			System.out.println("Your score is in the top 10. Congratulations !");
                     	}//if
-                    }//for
+        				i++;
+        			}//while
+        			if (!returnState){
+        				System.out.println("Your score is not in the top 10, try again");
+        			}
                 }//try
                 catch(IOException ex){
                 	System.out.println("Impossible to read the file");
@@ -113,7 +119,6 @@ public class TestHighScore4 {
         		System.out.println("Good Bye !");
         		beginning.close();
         		sc.close();
-            	
         	}
         	
     	}//while
